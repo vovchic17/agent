@@ -16,6 +16,7 @@ class FileMatch(BaseModel):
     name: str = Field(description="Имя файла")
     size: int = Field(description="Размер файла в байтах")
     matched_line: str = Field(description="Совпадающая строка")
+    line_number: int = Field(description="Номер найденной строки")
 
 
 @router.get("/search")
@@ -34,8 +35,9 @@ def search(
                     name=filename.name,
                     size=filepath.stat().st_size,
                     matched_line=line.strip(),
+                    line_number=i,
                 )
-                for line in f
+                for i, line in enumerate(f, start=1)
                 if query in line
             )
 
