@@ -7,6 +7,12 @@
 git clone https://github.com/vovchic17/agent.git
 ```
 
+### Установите директорию лог-файлов и порт приложения в файле .env
+```
+LOG_DIR=/var/log
+PORT=8000
+```
+
 ### Установите пакетный менеджер
 ```bash
 pip install uv
