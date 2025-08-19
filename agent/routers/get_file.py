@@ -1,6 +1,6 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Annotated
 
-from fastapi import APIRouter, HTTPException, Request
+from fastapi import APIRouter, HTTPException, Path, Request
 from fastapi.responses import FileResponse
 
 if TYPE_CHECKING:
@@ -11,7 +11,17 @@ router = APIRouter(tags=["Получение файла"])
 
 
 @router.get("/file/{filename}")
-def get_log_file(request: Request, filename: str) -> FileResponse:
+def get_log_file(
+    request: Request,
+    filename: Annotated[
+        str,
+        Path(
+            title="Имя файла",
+            description="Имя .log файла для скачивания",
+            example="syslog.log",
+        ),
+    ],
+) -> FileResponse:
     config: Settings = request.app.state.config
     log_path = config.LOG_DIR / filename
     if (
