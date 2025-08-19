@@ -2,7 +2,7 @@ from pathlib import Path
 from typing import TYPE_CHECKING, Annotated
 
 from fastapi import APIRouter, Query, Request
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 if TYPE_CHECKING:
     from config_reader import Settings
@@ -13,9 +13,9 @@ router = APIRouter(tags=["Поиск"])
 class FileMatch(BaseModel):
     """File match model."""
 
-    name: str
-    size: int
-    matched_line: str
+    name: str = Field(description="Имя файла")
+    size: int = Field(description="Размер файла в байтах")
+    matched_line: str = Field(description="Совпадающая строка")
 
 
 @router.get("/search")
