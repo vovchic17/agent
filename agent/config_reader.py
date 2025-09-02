@@ -1,13 +1,12 @@
-from pathlib import Path
-
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
     """Environment configuration."""
 
-    LOG_DIR: Path
     PORT: int
+    AUTH_USERNAME: str
+    AUTH_PASSWORD: str
 
     model_config = SettingsConfigDict(
         env_file=".env",

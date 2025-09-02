@@ -1,29 +1,24 @@
-from typing import TYPE_CHECKING, Annotated
+from typing import Annotated
 
-from fastapi import APIRouter, HTTPException, Path, Request
+from fastapi import APIRouter, HTTPException, Path
 from fastapi.responses import FileResponse
-
-if TYPE_CHECKING:
-    from config_reader import Settings
-
 
 router = APIRouter(tags=["Получение файла"])
 
 
-@router.get("/file/{filename}")
+@router.get("/file/{filepath}")
 def get_log_file(
-    request: Request,
-    filename: Annotated[
+    filepath: Annotated[
         str,
         Path(
-            title="Имя файла",
-            description="Имя .log файла для скачивания",
+            title="Путь файла",
+            description="Путь .log файла для скачивания",
             example="syslog.log",
         ),
     ],
 ) -> FileResponse:
-    config: Settings = request.app.state.config
-    log_path = config.LOG_DIR / filename
+    log_path = Path(filepath)
+
     if (
         not log_path.exists()
         or not log_path.is_file()
@@ -33,5 +28,5 @@ def get_log_file(
 
     return FileResponse(
         path=log_path,
-        filename=filename,
+        filename=log_path.name,
     )
