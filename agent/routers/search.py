@@ -136,7 +136,7 @@ def search(  # noqa: C901
 
                         results.append(
                             FileMatch(
-                                filepath=str(filepath.relative_to(base_path)),
+                                filepath=str(filepath),
                                 size=filepath.stat().st_size,
                                 matched_line=line.strip(),
                                 line_number=i,
