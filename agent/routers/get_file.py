@@ -1,3 +1,4 @@
+from pathlib import Path as PathLibPath
 from typing import Annotated
 
 from fastapi import APIRouter, HTTPException, Path
@@ -17,7 +18,7 @@ def get_log_file(
         ),
     ],
 ) -> FileResponse:
-    log_path = Path(filepath)
+    log_path = PathLibPath(filepath)
 
     if (
         not log_path.exists()
