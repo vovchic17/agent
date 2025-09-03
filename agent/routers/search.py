@@ -49,7 +49,7 @@ def extract_datetime(line: str) -> datetime | None:
 class FileMatch(BaseModel):
     """File Match model."""
 
-    name: str = Field(description="Имя файла")
+    filepath: str = Field(description="Имя файла")
     size: int = Field(description="Размер файла в байтах")
     matched_line: str = Field(description="Совпадающая строка")
     line_number: int = Field(description="Номер найденной строки")
@@ -136,7 +136,7 @@ def search(  # noqa: C901
 
                         results.append(
                             FileMatch(
-                                name=str(filepath.relative_to(base_path)),
+                                filepath=str(filepath.relative_to(base_path)),
                                 size=filepath.stat().st_size,
                                 matched_line=line.strip(),
                                 line_number=i,
